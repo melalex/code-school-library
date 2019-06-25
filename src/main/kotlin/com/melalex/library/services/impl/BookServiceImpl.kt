@@ -10,21 +10,23 @@ import com.melalex.library.services.BookService
 import com.melalex.library.support.IdProvider
 import com.melalex.library.support.Provider
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 
 @Service
 class BookServiceImpl(
-        val repositoryProvider: Provider<BookSource, BookRepository>,
-        val idProvider: IdProvider
+        val repositoryProvider: Provider<BookSource, BookRepository>
 ) : BookService {
 
     override fun createBook(bookEntity: BookEntity, bookSource: BookSource): BookEntity {
-        bookEntity.id = idProvider.provide()
+        bookEntity.id = null
 
         return repositoryProvider.provide(bookSource)
                 .save(bookEntity)
     }
 
     override fun updateBook(bookEntity: BookEntity, bookSource: BookSource): BookEntity {
+        bookEntity.id ?: throw IllegalArgumentException("Id in book [ $bookEntity ] should be set")
+
         return repositoryProvider.provide(bookSource)
                 .save(bookEntity)
     }

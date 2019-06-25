@@ -48,7 +48,7 @@ class BookController(
     @GetMapping("/{id}")
     @ApiOperation("Get book by id")
     fun getBookById(
-            @PathParam("id") id: Int,
+            @PathVariable("id") id: Int,
             @RequestParam(name = "source", required = true, defaultValue = "IN_MEMORY") bookSource: BookSource
     ): BookDto {
         return bookMapper.map(bookService.getById(id, bookSource))
@@ -66,7 +66,7 @@ class BookController(
     @DeleteMapping("/{id}")
     @ApiOperation("Delete book by id")
     fun deleteBookById(
-            @PathParam("id") id: Int,
+            @PathVariable("id") id: Int,
             @RequestParam(name = "source", required = true, defaultValue = "IN_MEMORY") bookSource: BookSource
     ) {
         bookService.deleteById(id, bookSource)

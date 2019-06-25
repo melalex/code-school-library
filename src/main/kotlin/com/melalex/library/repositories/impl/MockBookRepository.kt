@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class MockBookRepository(
         private val bookFactory: BookFactory,
-        private var libraryProperties: LibraryProperties
+        private val libraryProperties: LibraryProperties
 ) : BookRepository {
 
     override fun save(bookEntity: BookEntity): BookEntity = bookEntity
